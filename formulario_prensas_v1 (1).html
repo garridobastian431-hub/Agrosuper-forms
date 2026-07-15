@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>Registro Prensas — Agrosuper</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --v1:#0D2B6E;--v2:#1A3F9C;--v3:#2E5BBF;--vc:#E8EEF9;
+  --r1:#B71C1C;--rc:#FFEBEE;
+  --n1:#E65100;--nc:#FFF3E0;
+  --a1:#0D47A1;--ac:#E3F2FD;
+  --border:#C8D4EE;--bg:#F0F3FA;
+  --txt:#0A1A3A;--txt2:#2A3F6A;--txt3:#6A7FA8;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--txt);font-size:15px;min-height:100vh;}
+.app{max-width:480px;margin:0 auto;background:#fff;min-height:100vh;padding-bottom:80px;box-shadow:0 0 24px rgba(27,94,32,.06);}
+
+/* HEADER */
+.hdr{background:linear-gradient(135deg,#0D2B6E 0%,#1A3F9C 60%,#2E5BBF 100%);padding:0;overflow:hidden;}
+.hdr-top{display:flex;align-items:center;justify-content:space-between;padding:12px 16px 8px;}
+.hdr-logo{display:flex;align-items:center;gap:10px;}
+.hdr-logo-ic{width:36px;height:36px;background:rgba(255,255,255,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;border:1px solid rgba(255,255,255,.2);}
+.hdr-brand{font-size:16px;font-weight:700;color:#fff;letter-spacing:.02em;}
+.hdr-brand-sub{font-size:10px;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.08em;margin-top:1px;}
+.hdr-status{display:flex;align-items:center;gap:6px;background:rgba(0,0,0,.15);border-radius:20px;padding:5px 10px;}
+.dot{width:7px;height:7px;border-radius:50%;background:#7BC67E;flex-shrink:0;}
+.dot.sync{background:#FFC107;animation:blink 1s infinite;}
+.dot.err{background:#FF8A80;}
+.hdr-status-txt{font-size:10px;color:rgba(255,255,255,.8);}
+.hdr-meta{background:rgba(0,0,0,.12);padding:6px 16px;display:flex;gap:16px;align-items:center;}
+.hdr-meta-item{font-size:10px;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:4px;}
+.hdr-meta-item strong{color:#fff;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+/* TABS */
+.tabs{display:flex;background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:99;box-shadow:0 2px 8px rgba(27,94,32,.08);}
+.tab{flex:1;padding:11px 4px 9px;font-size:10px;font-weight:600;text-align:center;color:var(--txt3);border-bottom:3px solid transparent;line-height:1.3;cursor:pointer;transition:all .15s;text-transform:uppercase;letter-spacing:.04em;}
+.tab.on{color:var(--v1);border-bottom-color:var(--v1);background:#EEF2FC;}
+
+/* PÁGINAS */
+.pg{display:none;padding:0 0 16px;}.pg.on{display:block;}
+
+/* BANNER SECCIÓN */
+.sec-hdr{background:linear-gradient(135deg,#0D2B6E 0%,#1A3F9C 50%,#0D2B6E 100%);padding:16px 16px 14px;position:relative;overflow:hidden;}
+.sec-hdr::before{content:'';position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.06);}
+.sec-hdr::after{content:'';position:absolute;bottom:-30px;right:30px;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.04);}
+.sec-hdr-title{font-size:17px;font-weight:700;color:#fff;display:flex;align-items:center;gap:10px;position:relative;z-index:1;}
+.sec-hdr-sub{font-size:11px;color:rgba(255,255,255,.6);margin-top:5px;position:relative;z-index:1;padding-left:8px;border-left:2px solid rgba(255,255,255,.25);}
+
+/* CARDS */
+.card{background:#fff;margin:12px 12px 0;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid var(--border);}
+.card-hdr{background:#EEF2FC;padding:9px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:7px;}
+.card-hdr-txt{font-size:11px;font-weight:700;color:#0D2B6E;text-transform:uppercase;letter-spacing:.05em;}
+.card-body{padding:14px;}
+
+/* CAMPOS */
+.f{margin-bottom:12px;}
+.f:last-child{margin-bottom:0;}
+.f label{display:block;font-size:10.5px;color:var(--txt2);margin-bottom:5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
+.f input,.f select,.f textarea{width:100%;padding:11px 13px;border:1.5px solid var(--border);border-radius:9px;font-size:15px;background:#fff;font-family:inherit;-webkit-appearance:none;color:var(--txt);transition:border .15s;}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--v2);background:#FAFFF8;}
+.f textarea{height:72px;resize:none;}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.r3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+
+/* TOGGLES */
+.trow{display:flex;gap:8px;}
+.tog{flex:1;padding:11px 4px;font-size:13px;border:1.5px solid var(--border);border-radius:9px;background:#fff;color:var(--txt2);font-family:inherit;cursor:pointer;text-align:center;transition:all .15s;font-weight:500;}
+.tog.si{background:#EEF2FC;color:var(--v1);border-color:var(--v3);font-weight:600;}
+.tog.no{background:var(--rc);color:var(--r1);border-color:#F09595;font-weight:600;}
+.tog.parcial{background:var(--nc);color:var(--n1);border-color:#FFB74D;font-weight:600;}
+
+/* VOLTAJE ROW */
+.volt-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.volt-lbl{font-size:10px;text-align:center;color:var(--txt3);margin-top:4px;font-weight:600;}
+
+/* BOTONES */
+.btn-area{padding:14px 12px 0;display:flex;flex-direction:column;gap:8px;}
+.btn-p{width:100%;padding:15px;font-size:15px;font-weight:700;background:linear-gradient(135deg,#0D2B6E,#1A3F9C);color:#fff;border:none;border-radius:11px;cursor:pointer;font-family:inherit;box-shadow:0 4px 14px rgba(27,94,32,.3);letter-spacing:.02em;}
+.btn-p:active{transform:scale(.98);}
+.btn-o{width:100%;padding:11px;font-size:13px;background:#fff;border:1.5px solid var(--border);color:var(--txt2);border-radius:11px;cursor:pointer;font-family:inherit;font-weight:500;}
+
+/* TOAST */
+.toast{padding:12px 14px;border-radius:10px;font-size:14px;font-weight:600;margin:12px 12px 0;display:none;}
+.tok{background:#EEF2FC;color:var(--v1);border:1px solid var(--v3);}
+.twarn{background:var(--nc);color:var(--n1);border:1px solid #FFB74D;}
+
+/* CHIPS FALLAS */
+.chips{display:flex;flex-wrap:wrap;gap:8px;}
+.chip{padding:8px 13px;border:1.5px solid var(--border);border-radius:20px;font-size:13px;cursor:pointer;background:#fff;color:var(--txt2);transition:all .15s;}
+.chip.on{background:#0D2B6E;color:#fff;border-color:#0D2B6E;}
+.chip.on-warn{background:var(--n1);color:#fff;border-color:var(--n1);}
+
+.hidden{display:none;}
+.req-note{font-size:10px;color:var(--txt3);text-align:right;margin:8px 12px 0;font-style:italic;}
+
+/* ── INICIO/TÉRMINO ─────────────────────────────────────── */
+.modo-row{display:flex;gap:10px;margin-bottom:18px;}
+.modo-btn{flex:1;padding:14px;border-radius:12px;border:2px solid var(--line);
+  background:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;
+  display:flex;align-items:center;justify-content:center;gap:8px;transition:all .15s;}
+.modo-btn.inicio.on{background:#DCFCE7;border-color:#16A34A;color:#15803D;}
+.modo-btn.termino.on{background:#FEF3C7;border-color:#D97706;color:#B45309;}
+.modo-btn:not(.on){color:#94A3B8;}
+.campo-bloq{background:#F1F5F9;color:#64748B;font-weight:600;border-color:#E2E8F0 !important;cursor:not-allowed;}
+/* REGISTROS ENVIADOS */
+.registros-list{display:flex;flex-direction:column;gap:12px;margin-top:8px;}
+.reg-card{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+.reg-card-hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--line);}
+.reg-card-sec{font-size:13px;font-weight:700;color:#0C1117;}
+.reg-card-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;}
+.reg-card-badge.inicio{background:#DCFCE7;color:#15803D;}
+.reg-card-badge.termino{background:#FEF3C7;color:#B45309;}
+.reg-card-badge.completo{background:#DBEAFE;color:#1D4ED8;}
+.reg-card-body{padding:12px 16px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.reg-kpi{background:#F8FAFC;border-radius:8px;padding:8px 10px;}
+.reg-kpi-l{font-size:10px;color:#94A3B8;margin-bottom:2px;}
+.reg-kpi-v{font-size:13px;font-weight:700;font-family:monospace;color:#0C1117;}
+.reg-card-foot{padding:10px 16px;border-top:1px solid var(--line);display:flex;gap:8px;}
+.reg-edit-btn{padding:6px 14px;border-radius:8px;border:none;background:#FEF3C7;color:#B45309;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;}
+.reg-gps{font-size:10px;color:#94A3B8;margin-left:auto;align-self:center;}
+.gps-chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:#64748B;background:#F1F5F9;padding:3px 8px;border-radius:6px;}
+
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-top">
+    <div class="hdr-logo">
+      <div class="hdr-logo-ic" style="background:rgba(255,255,255,.2);font-weight:900;font-size:13px;color:#fff;letter-spacing:-.5px">AGE</div>
+      <div>
+        <div class="hdr-brand">AGE Global</div>
+        <div class="hdr-brand-sub">Control de Prensas</div>
+      </div>
+    </div>
+    <div class="hdr-status">
+      <span class="dot" id="sdot"></span>
+      <span class="hdr-status-txt" id="stxt">En línea</span>
+    </div>
+  </div>
+  <div class="hdr-meta">
+    <div class="hdr-meta-item">🏭 <strong>Registro de Turno</strong></div>
+    <div class="hdr-meta-item" id="hdr-fecha"></div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab on" onclick="goTab('turno',this)">📋 Turno</div>
+  <div class="tab" onclick="goTab('falla',this)">⚠️ Fallas</div>
+  <div class="tab" onclick="goTab('caudal',this)">💧 Caudal</div>
+  <div class="tab" onclick="goTab('hextra',this)">🕐 H. Extra</div>
+</div>
+
+<!-- ══════════════ PESTAÑA 1: TURNO ══════════════ -->
+<div class="pg on" id="pg-turno">
+  <div class="sec-hdr">
+    <div class="sec-hdr-title">📋 Registro de Turno</div>
+    <div class="sec-hdr-sub">Completar al término del turno</div>
+  </div>
+  <div id="t-turno" class="toast tok"></div>
+  <p class="req-note">* Campos obligatorios</p>
+
+  <!-- Identificación -->
+  <!-- MODO INICIO/TÉRMINO TURNO -->
+<div class="modo-row">
+  <button class="modo-btn inicio on" id="t-modo-ini" onclick="setModoTurno('inicio')">🟢 Inicio de turno</button>
+  <button class="modo-btn termino" id="t-modo-ter" onclick="setModoTurno('termino')">🟡 Término de turno</button>
+</div>
+<input type="hidden" id="t-lat" value="">
+<input type="hidden" id="t-id-turno" value="">
+<input type="hidden" id="t-lng" value="">
+<div id="t-gps-status" class="gps-chip" style="margin-bottom:12px">📍 Obteniendo ubicación...</div>
+
+<div class="card">
+    <div class="card-hdr"><span class="card-hdr-txt">📍 Identificación</span></div>
+    <div class="card-body">
+      <div class="f">
+        <label>Fecha del turno *</label>
+        <input type="date" id="t-fecha" readonly class="campo-bloq">
+      </div>
+      <div class="r2">
+        <div class="f">
+          <label>Hora inicio *</label>
+          <input type="time" id="t-hora-ini" readonly class="campo-bloq" placeholder="08:00">
+        </div>
+        <div class="f">
+          <label>Hora término *</label>
+          <input type="time" id="t-hora-fin" readonly class="campo-bloq" placeholder="16:00">
+        </div>
+      </div>
+      <div class="f">
+        <label>Sector *</label>
+        <select id="t-sector">
+          <option value="">Seleccionar sector...</option>
+          <option>El Quisco</option>
+          <option>Totihue</option>
+          <option>Gomeros</option>
+          <option>Almendros</option>
+          <option>Rincón de Abra</option>
+          <option>Arboleda</option>
+        </select>
+      </div>
+      <div class="f">
+        <label>Operador *</label>
+        <select id="t-operador" style="width:100%;padding:11px 14px;border:1.5px solid var(--brd);border-radius:10px;font-size:14px;font-family:inherit;background:#fff;color:var(--ink)">
+<option value="">Seleccionar operador...</option>
+<option>Ricardo Donoso</option>
+<option>Kevin Ramírez</option>
+<option>Juan Colihuinca</option>
+<option>Esteban Pinto</option>
+<option>Enzo Donoso</option>
+<option>José Torrealba</option>
+</select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Estado de la prensa -->
+  <div class="card">
+    <div class="card-hdr"><span class="card-hdr-txt">🔩 Estado de la Prensa</span></div>
+    <div class="card-body">
+      <div class="f">
+        <label>Estado operacional *</label>
+        <div class="trow">
+          <button class="tog" id="t-op-si" onclick="setTog('t-op','si')">✅ Operativa</button>
+          <button class="tog" id="t-op-no" onclick="setTog('t-op','no')">❌ No operativa</button>
+          <button class="tog" id="t-op-parcial" onclick="setTog('t-op','parcial')">⚠️ Parcial</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Voltajes al inicio -->
+  <div class="card">
+    <div class="card-hdr"><span class="card-hdr-txt">⚡ Voltajes al Inicio del Turno (V)</span></div>
+    <div class="card-body">
+      <div class="volt-row">
+        <div>
+          <div class="f"><label>Fase 1</label><input type="number" id="t-vr" placeholder="0" step="0.1"></div>
+          <div class="volt-lbl">Fase 1</div>
+        </div>
+        <div>
+          <div class="f"><label>Fase 2</label><input type="number" id="t-vs" placeholder="0" step="0.1"></div>
+          <div class="volt-lbl">Fase 2</div>
+        </div>
+        <div>
+          <div class="f"><label>Fase 3</label><input type="number" id="t-vt" placeholder="0" step="0.1"></div>
+          <div class="volt-lbl">Fase 3</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pozo homogeneizador -->
+  <div class="card">
+    <div class="card-hdr"><span class="card-hdr-txt">🏊 Pozo Homogeneizador</span></div>
+    <div class="card-body">
+      <div class="r2">
+        <div class="f">
+          <label>Nivel inicio (cm)</label>
+          <input type="number" id="t-pozo-ini" placeholder="0" min="0">
+        </div>
+        <div class="f">
+          <label>Nivel término (cm)</label>
+          <input type="number" id="t-pozo-fin" placeholder="0" min="0">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Horómetros -->
+  <div class="card" id="card-flama">
+    <div class="card-hdr"><span class="card-hdr-txt">⏱️ Horómetros</span></div>
+    <div class="card-body">
+      <div class="f"><label style="color:var(--v1);font-size:11px;margin-bottom:8px;display:block">🔩 Prensa</label></div>
+      <div class="r2">
+        <div class="f">
+          <label>Inicio (hr)</label>
+          <input type="number" id="t-horm-prens-ini" placeholder="0" step="0.1" min="0" oninput="calcHorasPrens()">
+        </div>
+        <div class="f">
+          <label>Término (hr)</label>
+          <input type="number" id="t-horm-prens-fin" placeholder="0" step="0.1" min="0" oninput="calcHorasPrens()">
+        </div>
+      </div>
+      <div class="f">
+        <label>Horas efectivas de prensado</label>
+        <input type="number" id="t-horas-prens" placeholder="Automático" step="0.1" readonly style="background:#EEF2FC;font-weight:700;color:#0D2B6E">
+      </div>
+      <div class="f" style="margin-top:8px"><label style="color:var(--v1);font-size:11px;margin-bottom:8px;display:block">⚙️ Bomba Centrífuga</label></div>
+      <div class="r2">
+        <div class="f">
+          <label>Inicio (hr)</label>
+          <input type="number" id="t-horm-bomb-ini" placeholder="0" step="0.1" min="0" oninput="calcM3Bomba()">
+        </div>
+        <div class="f">
+          <label>Término (hr)</label>
+          <input type="number" id="t-horm-bomb-fin" placeholder="0" step="0.1" min="0">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLAMA -->
+  <div class="card" id="card-dturno">
+    <div class="card-hdr">
+      <span class="card-hdr-txt">🔥 Horómetros flama</span>
+    </div>
+    <div class="card-body">
+      <!-- No aplica toggle -->
+      <div class="f">
+        <label>¿Aplica flama?</label>
+        <div class="trow">
+          <button class="tog si" id="t-flama-aplica" onclick="setFlamaAplica(true)">✅ Aplica</button>
+          <button class="tog" id="t-flama-na" onclick="setFlamaAplica(false)">➖ No aplica</button>
+        </div>
+      </div>
+      <div id="t-flama-campos">
+        <div class="trow-2">
+          <div class="f" id="f-flama-ini">
+            <label>Horómetro inicio flama (hr)</label>
+            <input type="number" id="t-flama-ini" placeholder="0" step="0.1" min="0" oninput="calcM3Flama()">
+          </div>
+          <div class="f" id="f-flama-fin">
+            <label>Horómetro término flama (hr)</label>
+            <input type="number" id="t-flama-fin" placeholder="0" step="0.1" min="0" oninput="calcM3Flama()">
+          </div>
+        </div>
+        <div class="f">
+          <label>m³ calculados (flama)</label>
+          <input type="number" id="t-m3-flama" placeholder="Automático" readonly
+            style="background:#EEF2FC;font-weight:700;color:#0D2B6E">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- M3 BOMBA display — agregar después del card de bomba -->
+  <!-- Horas extras / doble turno -->
+  <div class="card" id="card-hext">
+    <div class="card-hdr"><span class="card-hdr-txt">⏰ Horas Extras / Doble Turno</span></div>
+    <div class="card-body">
+      <div class="f">
+        <label>¿Se realizaron horas extras?</label>
+        <div class="trow">
+          <button class="tog" id="t-hext-si" onclick="setTog('t-hext','si');toggleHExt(true)">Sí</button>
+          <button class="tog" id="t-hext-no" onclick="setTog('t-hext','no');toggleHExt(false)">No</button>
+        </div>
+      </div>
+      <div id="blk-hext" class="hidden">
+        <div class="f">
+          <label>Horas extras realizadas</label>
+          <input type="number" id="t-hext-cant" placeholder="Ej: 2" step="0.5" min="0.5" max="12">
+        </div>
+        <div class="f">
+          <label>Motivo horas extras</label>
+          <div class="chips" id="chips-hext">
+            <button class="chip" onclick="toggleChip(this)">Alta demanda operacional</button>
+            <button class="chip" onclick="toggleChip(this)">Falla en turno anterior</button>
+            <button class="chip" onclick="toggleChip(this)">Atraso en proceso</button>
+            <button class="chip" onclick="toggleChip(this)">Nivel crítico laguna</button>
+            <button class="chip" onclick="toggleChip(this)">Instrucción supervisor</button>
+            <button class="chip" onclick="toggleChip(this)">Otro</button>
+          </div>
+        </div>
+        <div class="f">
+          <label>Detalle adicional</label>
+          <input type="text" id="t-hext-detalle" placeholder="Especificar si es necesario...">
+        </div>
+      </div>
+      <div class="f" style="margin-top:4px">
+        <label>¿Se realizó doble turno?</label>
+        <div class="trow">
+          <button class="tog" id="t-dturno-si" onclick="setTog('t-dturno','si');toggleDTurno(true)">Sí</button>
+          <button class="tog" id="t-dturno-no" onclick="setTog('t-dturno','no');toggleDTurno(false)">No</button>
+        </div>
+      </div>
+      <div id="blk-dturno" class="hidden">
+        <div class="f">
+          <label>Operador segundo turno</label>
+          <input type="text" id="t-dturno-op" placeholder="Nombre del operador del segundo turno">
+        </div>
+        <div class="f">
+          <label>Motivo doble turno</label>
+          <div class="chips" id="chips-dturno">
+            <button class="chip" onclick="toggleChip(this)">Alta demanda operacional</button>
+            <button class="chip" onclick="toggleChip(this)">Nivel crítico laguna</button>
+            <button class="chip" onclick="toggleChip(this)">Falla en turno diurno</button>
+            <button class="chip" onclick="toggleChip(this)">Instrucción supervisor</button>
+            <button class="chip" onclick="toggleChip(this)">Otro</button>
+          </div>
+        </div>
+        <div class="f">
+          <label>Detalle adicional</label>
+          <input type="text" id="t-dturno-detalle" placeholder="Especificar si es necesario...">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Observaciones -->
+  <div class="card">
+    <div class="card-hdr"><span class="card-hdr-txt">📝 Observaciones del Turno</span></div>
+    <div class="card-body">
+      <div class="f">
+        <textarea id="t-obs" placeholder="Observaciones generales del turno..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="btn-area">
+    <button class="btn-p" onclick="guardarTurno()">💾 Guardar registro de turno</button>
+    <button class="btn-o" onclick="limpiarTurno()">🗑 Limpiar formulario</button>
+  
+  <!-- REGISTROS ENVIADOS TURNO -->
+  <div style="padding:0 16px 24px">
+    <div style="font-size:13px;font-weight:700;color:#0C1117;margin-bottom:8px">📋 Registros del turno</div>
+    <div class="registros-list" id="registros-turno">
+      <div style="text-align:center;color:#94A3B8;padding:20px;font-size:13px">Sin registros aún</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════ PESTAÑA 2: FALLAS ══════════════ -->
+<div class="pg" id="pg-falla">
+  <div class="sec-hdr">
+    <div class="sec-hdr-title">⚠️ Registro de Fallas</div>
+    <div class="sec-hdr-sub">Equipos fuera de servicio o sin prensado</div>
+  </div>
+  <div id="t-falla" class="toast tok"></div>
+
+  <!-- Identificación -->
+  <div class="card">
+    <div class="card-hdr"><span class="card-hdr-txt">📍 Identificación</span></div>
+    <div class="card-body">
+      <div class="f">
+        <label>Fecha *</label>
+        <input type="date" id="f-fecha" readonly class="campo-bloq">
+      </div>
+      <div class="r2">
+        <div class="f">
+          <label>Hora detección</label>
+          <input type="time" id="f-hora">
+        </div>
+        <div class="f">
+          <label>Sector *</label>
+          <select id="f-sector">
+            <option value="">Seleccionar...</option>
+            <option>El Quisco</option>
+            <option>Totihue</option>
+            <option>Gomeros</option>
+            <option>Almendros</option>
+            <option>Rincón de Abra</option>
+            <option>Arboleda</option>
+          </select>
+        </div>
+      </div>
+      <div class="f">
+        <label>Operador *</label>
+        <input type="text" id="f-operador" placeholder="Nombre del operador">
+      </div>
+    </div>
+  </div>
+
+  <!-- Tipo de evento -->
+  <div class="card">
+    <div class="card-hdr"><span class="card-hdr-txt">🔴 Tipo de Evento</span></div>
+    <div class="card-body">
+      <div class="f">
+        <label>Categoría *</label>
+        <div class="trow">
+          <button class="tog" id="f-cat-falla" onclick="setFCat('falla')">⚙️ Falla equipo</button>
+          <button class="tog" id="f-cat-noprens" onclick="setFCat('noprens')">🚫 Sin prensado</button>
+        </div>
+      </div>
+
+      <!-- FALLA EN EQUIPOS -->
+      <div id="blk-falla-equipo" class="hidden">
+        <div class="f" style="margin-top:12px">
+          <label>Equipo(s) con falla *</label>
+          <div class="chips" id="chips-equipos">
+            <button class="chip" onclick="toggleChip(this,'eq')">Bomba sumergible</button>
+            <button class="chip" onclick="toggleChip(this,'eq')">Agitador</button>
+            <button class="chip" onclick="toggleChip(this,'eq')">Bomba centrífuga</button>
+            <button class="chip" onclick="toggleChip(this,'eq')">Prensa</button>
+            <button class="chip" onclick="toggleChip(this,'eq')">Tablero eléctrico</button>
+            <button class="chip" onclick="toggleChip(this,'eq')">Malacate(s)</button>
+            <button class="chip" onclick="toggleChip(this,'eq')">Tubería / Filtración</button>
+            <button class="chip" onclick="toggleChip(this,'eq')">Otro</button>
+          </div>
+        </div>
+        <div class="f">
+          <label>Descripción de la falla</label>
+          <textarea id="f-desc-falla" placeholder="Describir la falla detectada..."></textarea>
+        </div>
+        <div class="f">
+          <label>¿Se detuvo la operación?</label>
+          <div class="trow">
+            <button class="tog" id="f-det-si" onclick="setTog('f-det','si')">Sí</button>
+            <button class="tog" id="f-det-no" onclick="setTog('f-det','no')">No</button>
+          </div>
+        </div>
+        <div class="f">
+          <label>Duración de la detención (min)</label>
+          <input type="number" id="f-duracion" placeholder="0" min="0">
+        </div>
+        <div class="f">
+          <label>Estado de resolución</label>
+          <div class="trow">
+            <button class="tog" id="f-res-resuelto" onclick="setTog('f-res','resuelto')">✅ Resuelto</button>
+            <button class="tog" id="f-res-pendiente" onclick="setTog('f-res','pendiente')">⏳ Pendiente</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIN PRENSADO -->
+      <div id="blk-sin-prensado" class="hidden">
+        <div class="f" style="margin-top:12px">
+          <label>Motivo sin prensado *</label>
+          <div class="chips" id="chips-motivos">
+            <button class="chip" onclick="toggleChip(this,'mot')">Sin nivel — sector tapado</button>
+            <button class="chip" onclick="toggleChip(this,'mot')">No han retirado el tarro</button>
+            <button class="chip" onclick="toggleChip(this,'mot')">Falla de equipo</button>
+            <button class="chip" onclick="toggleChip(this,'mot')">Mantenimiento programado</button>
+            <button class="chip" onclick="toggleChip(this,'mot')">Otro</button>
+          </div>
+        </div>
+        <div class="f">
+          <label>Horas sin prensado</label>
+          <input type="number" id="f-horas-sin" placeholder="0" step="0.5" min="0" max="24">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Acciones tomadas -->
+  <div class="card">
+    <div class="card-hdr"><span class="card-hdr-txt">🔧 Acciones Tomadas</span></div>
+    <div class="card-body">
+      <div class="f">
+        <textarea id="f-acciones" placeholder="Describir las acciones tomadas o correctivos aplicados..."></textarea>
+      </div>
+      <div class="f">
+        <label>¿Se notificó al supervisor?</label>
+        <div class="trow">
+          <button class="tog" id="f-notif-si" onclick="setTog('f-notif','si')">Sí</button>
+          <button class="tog" id="f-notif-no" onclick="setTog('f-notif','no')">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="btn-area">
+    <button class="btn-p" onclick="guardarFalla()">💾 Guardar registro de falla</button>
+    <button class="btn-o" onclick="limpiarFalla()">🗑 Limpiar formulario</button>
+  </div>
+</div>
+
+<!-- ══════════════ PESTAÑA 3: CAUDAL ══════════════ -->
+<div class="pg" id="pg-caudal">
+  <div class="sec-hdr">
+    <div class="sec-hdr-title">💧 Registro de Caudalímetro</div>
+    <div class="sec-hdr-sub">Lectura inicio y término del turno</div>
+  </div>
+  <div id="t-caudal" class="toast tok"></div>
+
+  <!-- Identificación -->
+  <div class="card">
+    <div class="card-hdr"><span class="card-hdr-txt">📍 Identificación</span></div>
+    <div class="card-body">
+      <div class="f">
+        <label>Fecha *</label>
+        <input type="date" id="c-fecha" readonly class="campo-bloq">
+      </div>
+      <div class="r2">
+        <div class="f">
+          <label>Hora inicio</label>
+          <input type="time" id="c-hora-ini">
+        </div>
+        <div class="f">
+          <label>Hora término</label>
+          <input type="time" id="c-hora-fin">
+        </div>
+      </div>
+      <div class="f">
+        <label>Sector *</label>
+        <select id="c-sector">
+          <option value="">Seleccionar sector...</option>
+          <option>El Quisco</option>
+          <option>Totihue</option>
+          <option>Gomeros</option>
+          <option>Almendros</option>
+          <option>Rincón de Abra</option>
+          <option>Arboleda</option>
+        </select>
+      </div>
+      <div class="f">
+        <label>Operador *</label>
+        <select id="c-operador" style="width:100%;padding:11px 14px;border:1.5px solid var(--brd);border-radius:10px;font-size:14px;font-family:inherit;background:#fff;color:var(--ink)">
+<option value="">Seleccionar operador...</option>
+<option>Ricardo Donoso</option>
+<option>Kevin Ramírez</option>
+<option>Juan Colihuinca</option>
+<option>Esteban Pinto</option>
+<option>Enzo Donoso</option>
+<option>José Torrealba</option>
+</select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lecturas caudalímetro -->
+  <div class="card">
+    <div class="card-hdr"><span class="card-hdr-txt">📊 Lecturas Caudalímetro</span></div>
+    <div class="card-body">
+      <div class="r2">
+        <div class="f">
+          <label>Lectura inicio (m³)</label>
+          <input type="number" id="c-lect-ini" placeholder="0.0" step="0.01" min="0" oninput="calcCaudal()">
+        </div>
+        <div class="f">
+          <label>Lectura término (m³)</label>
+          <input type="number" id="c-lect-fin" placeholder="0.0" step="0.01" min="0" oninput="calcCaudal()">
+        </div>
+      </div>
+      <div class="f">
+        <label>Volumen procesado (m³) — calculado</label>
+        <input type="number" id="c-vol-proc" readonly placeholder="Automático" style="background:#EEF2FC;font-weight:700;color:var(--v1)">
+      </div>
+    </div>
+  </div>
+
+  <!-- Estado caudalímetro -->
+  <div class="card">
+    <div class="card-hdr"><span class="card-hdr-txt">🔩 Estado del Equipo</span></div>
+    <div class="card-body">
+      <div class="f">
+        <label>Estado caudalímetro</label>
+        <div class="trow">
+          <button class="tog" id="c-est-ok" onclick="setTog('c-est','ok')">✅ Operativo</button>
+          <button class="tog" id="c-est-falla" onclick="setTog('c-est','falla')">❌ Con falla</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Observaciones -->
+  <div class="card">
+    <div class="card-hdr"><span class="card-hdr-txt">📝 Observaciones</span></div>
+    <div class="card-body">
+      <div class="f">
+        <textarea id="c-obs" placeholder="Observaciones del caudalímetro o del proceso..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="btn-area">
+    <button class="btn-p" onclick="guardarCaudal()">💾 Guardar registro de caudal</button>
+    <button class="btn-o" onclick="limpiarCaudal()">🗑 Limpiar formulario</button>
+  </div>
+  <!-- REGISTROS ENVIADOS CAUDAL -->
+  <div style="padding:0 16px 24px">
+    <div style="font-size:13px;font-weight:700;color:#0C1117;margin-bottom:8px">💧 Registros de caudal</div>
+    <div class="registros-list" id="registros-caudal">
+      <div style="text-align:center;color:#94A3B8;padding:20px;font-size:13px">Sin registros aún</div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ══════════════ PESTAÑA 4: HORAS EXTRAS / DOBLE TURNO ══════════════ -->
+<div class="pg" id="pg-hextra">
+  <div class="sec-hdr">
+    <div class="sec-hdr-title">🕐 Horas Extra / Doble Turno</div>
+    <div class="sec-hdr-sub">Registro de jornada extendida y motivo</div>
+  </div>
+  <div id="t-hextra" class="toast tok"></div>
+  <p class="req-note">* Campos obligatorios</p>
+
+  <!-- Identificación -->
+  <div class="card">
+    <div class="card-hdr"><span class="card-hdr-txt">📍 Identificación</span></div>
+    <div class="card-body">
+      <div class="f">
+        <label>Fecha *</label>
+        <input type="date" id="h-fecha" readonly class="campo-bloq">
+      </div>
+      <div class="f">
+        <label>Sector *</label>
+        <select id="h-sector">
+          <option value="">Seleccionar sector...</option>
+          <option>El Quisco</option>
+          <option>Totihue</option>
+          <option>Gomeros</option>
+          <option>Almendros</option>
+          <option>Rincón de Abra</option>
+          <option>Arboleda</option>
+        </select>
+      </div>
+      <div class="f">
+        <label>Operador(es) *</label>
+        <input type="text" id="h-operador" placeholder="Nombre(s) del operador">
+      </div>
+    </div>
+  </div>
+
+  <!-- Tipo de jornada -->
+  <div class="card">
+    <div class="card-hdr"><span class="card-hdr-txt">🔀 Tipo de Jornada</span></div>
+    <div class="card-body">
+      <div class="f">
+        <label>Tipo *</label>
+        <div class="trow">
+          <button class="tog" id="h-tipo-extra" onclick="setHTipo('extra')">⏱ Hora extra</button>
+          <button class="tog" id="h-tipo-doble" onclick="setHTipo('doble')">🔄 Doble turno</button>
+        </div>
+      </div>
+
+      <!-- HORA EXTRA -->
+      <div id="blk-hora-extra" class="hidden">
+        <div class="f" style="margin-top:12px">
+          <label>Horario de la hora extra</label>
+          <div class="r2">
+            <div class="f">
+              <label>Desde</label>
+              <input type="time" id="h-extra-ini" placeholder="16:00">
+            </div>
+            <div class="f">
+              <label>Hasta</label>
+              <input type="time" id="h-extra-fin" placeholder="18:00">
+            </div>
+          </div>
+        </div>
+        <div class="f">
+          <label>Total horas extra</label>
+          <input type="number" id="h-extra-total" placeholder="Ej: 2.0" step="0.5" min="0" max="8">
+        </div>
+      </div>
+
+      <!-- DOBLE TURNO -->
+      <div id="blk-doble-turno" class="hidden">
+        <div class="f" style="margin-top:12px">
+          <label>Horario del segundo turno</label>
+          <div class="r2">
+            <div class="f">
+              <label>Inicio 2° turno</label>
+              <input type="time" id="h-doble-ini" placeholder="16:00">
+            </div>
+            <div class="f">
+              <label>Término 2° turno</label>
+              <input type="time" id="h-doble-fin" placeholder="00:00">
+            </div>
+          </div>
+        </div>
+        <div class="f">
+          <label>Operador del 2° turno</label>
+          <input type="text" id="h-doble-op2" placeholder="Nombre del 2° operador (si aplica)">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Motivo -->
+  <div class="card">
+    <div class="card-hdr"><span class="card-hdr-txt">📋 Motivo</span></div>
+    <div class="card-body">
+      <div class="f">
+        <label>Motivo de la jornada extendida *</label>
+        <div class="chips" id="chips-motivo-hextra">
+          <button class="chip" onclick="toggleChip(this)">Alta demanda de purín</button>
+          <button class="chip" onclick="toggleChip(this)">Lavado de sector</button>
+          <button class="chip" onclick="toggleChip(this)">Compensar parada de equipo</button>
+          <button class="chip" onclick="toggleChip(this)">Solicitud de supervisor</button>
+          <button class="chip" onclick="toggleChip(this)">Emergencia operacional</button>
+          <button class="chip" onclick="toggleChip(this)">Otro</button>
+        </div>
+      </div>
+      <div class="f">
+        <label>Detalle / especificación</label>
+        <textarea id="h-motivo-detalle" placeholder="Especificar el motivo si seleccionó 'Otro' o agregar detalles..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Autorización -->
+  <div class="card">
+    <div class="card-hdr"><span class="card-hdr-txt">✅ Autorización</span></div>
+    <div class="card-body">
+      <div class="f">
+        <label>¿Cuenta con autorización del supervisor?</label>
+        <div class="trow">
+          <button class="tog" id="h-aut-si" onclick="setTog('h-aut','si')">Sí</button>
+          <button class="tog" id="h-aut-no" onclick="setTog('h-aut','no')">No</button>
+        </div>
+      </div>
+      <div class="f">
+        <label>Nombre supervisor autorizante</label>
+        <input type="text" id="h-supervisor" placeholder="Nombre del supervisor">
+      </div>
+      <div class="f">
+        <label>Observaciones</label>
+        <textarea id="h-obs" placeholder="Observaciones adicionales..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="btn-area">
+    <button class="btn-p" onclick="guardarHExtra()">💾 Guardar jornada extendida</button>
+    <button class="btn-o" onclick="limpiarHExtra()">🗑 Limpiar formulario</button>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<script>
+// ── CÁLCULO M3 BOMBA Y FLAMA ─────────────────────────────────
+function calcM3Bomba(){
+  var ini = parseFloat((document.getElementById('t-horm-bomb-ini')||{}).value)||0;
+  var fin = parseFloat((document.getElementById('t-horm-bomb-fin')||{}).value)||0;
+  var el  = document.getElementById('t-m3-bomba');
+  if(!el) return;
+  if(fin > ini){ el.value = Math.round((fin-ini)*100)/100; }
+  else { el.value = ''; }
+}
+
+function calcM3Flama(){
+  var ini = parseFloat((document.getElementById('t-flama-ini')||{}).value)||0;
+  var fin = parseFloat((document.getElementById('t-flama-fin')||{}).value)||0;
+  var el  = document.getElementById('t-m3-flama');
+  if(!el) return;
+  if(fin > ini){ el.value = Math.round((fin-ini)*100)/100; }
+  else { el.value = ''; }
+}
+
+var flamaAplica = true;
+function setFlamaAplica(aplica){
+  flamaAplica = aplica;
+  var btnAp = document.getElementById('t-flama-aplica');
+  var btnNa = document.getElementById('t-flama-na');
+  var campos = document.getElementById('t-flama-campos');
+  if(btnAp) btnAp.className = aplica ? 'tog si' : 'tog';
+  if(btnNa) btnNa.className = aplica ? 'tog' : 'tog no';
+  if(campos) campos.style.display = aplica ? '' : 'none';
+  if(!aplica){
+    var ini=document.getElementById('t-flama-ini');
+    var fin=document.getElementById('t-flama-fin');
+    var m3=document.getElementById('t-m3-flama');
+    if(ini)ini.value='';if(fin)fin.value='';if(m3)m3.value='';
+  }
+}
+
+// ══ GPS AUTOMÁTICO ═══════════════════════════════════════════
+var GPS_TURNO = {lat:'', lng:'', ok:false};
+
+function obtenerGPS(latId, lngId, statusId, gpsObj){
+  var stat = document.getElementById(statusId);
+  if(!navigator.geolocation){
+    if(stat) stat.textContent = '📍 GPS no disponible';
+    return;
+  }
+  if(stat) stat.textContent = '📍 Obteniendo ubicación...';
+  navigator.geolocation.getCurrentPosition(
+    function(pos){
+      var lat = pos.coords.latitude.toFixed(6);
+      var lng = pos.coords.longitude.toFixed(6);
+      var acc = Math.round(pos.coords.accuracy);
+      var latEl = document.getElementById(latId);
+      var lngEl = document.getElementById(lngId);
+      if(latEl) latEl.value = lat;
+      if(lngEl) lngEl.value = lng;
+      gpsObj.lat = lat; gpsObj.lng = lng; gpsObj.ok = true;
+      if(stat) stat.textContent = '📍 ' + lat + ', ' + lng + ' (±' + acc + 'm)';
+    },
+    function(err){
+      if(stat) stat.textContent = '📍 No se pudo obtener ubicación';
+    },
+    {enableHighAccuracy:true, timeout:10000, maximumAge:0}
+  );
+}
+
+// ══ HORA AUTOMÁTICA ═══════════════════════════════════════════
+function setHoraAuto(fieldId){
+  var el = document.getElementById(fieldId);
+  if(!el) return;
+  var now = new Date();
+  var h = now.getHours(), m = now.getMinutes();
+  el.value = (h<10?'0':'')+h+':'+(m<10?'0':'')+m;
+}
+
+function setFechaAuto(fieldId){
+  var el = document.getElementById(fieldId);
+  if(!el || el.value) return;
+  var now = new Date();
+  el.value = now.toISOString().slice(0,10);
+}
+
+// ══ MODO INICIO/TÉRMINO — TURNO ═══════════════════════════════
+var modoTurno = 'inicio';
+var registrosTurno = []; // guardados localmente
+var editandoTurno = -1;
+
+function setModoTurno(modo){
+  modoTurno = modo;
+  document.getElementById('t-modo-ini').className = 'modo-btn inicio' + (modo==='inicio'?' on':'');
+  document.getElementById('t-modo-ter').className = 'modo-btn termino' + (modo==='termino'?' on':'');
+
+  function show(id){var e=document.getElementById(id);if(e)e.style.display='';}
+  function hide(id){var e=document.getElementById(id);if(e)e.style.display='none';}
+  function enable(id){var e=document.getElementById(id);if(e){e.style.opacity='1';e.style.pointerEvents='';}}
+  function disable(id){var e=document.getElementById(id);if(e){e.style.opacity='0.3';e.style.pointerEvents='none';}}
+
+  if(modo === 'inicio'){
+    setHoraAuto('t-hora-ini');
+    document.getElementById('t-hora-fin').value = '';
+
+    // Campos inicio → activos
+    ['t-vr','t-vs','t-vt','t-pozo-ini','t-horm-prens-ini','t-horm-bomb-ini'].forEach(function(id){
+      var el=document.getElementById(id);if(el&&el.parentElement)el.parentElement.style.opacity='1';
+    });
+    // Campos término → inactivos
+    ['t-pozo-fin','t-horm-prens-fin','t-horm-bomb-fin'].forEach(function(id){
+      var el=document.getElementById(id);if(el){el.value='';if(el.parentElement)el.parentElement.style.opacity='0.3';}
+    });
+    // Flama: mostrar solo campo inicio, ocultar fin
+    show('f-flama-ini'); hide('f-flama-fin');
+    // Horas extra y doble turno → ocultar
+    hide('card-hext'); hide('card-dturno');
+
+  } else {
+    setHoraAuto('t-hora-fin');
+
+    // Campos término → activos
+    ['t-pozo-fin','t-horm-prens-fin','t-horm-bomb-fin'].forEach(function(id){
+      var el=document.getElementById(id);if(el&&el.parentElement)el.parentElement.style.opacity='1';
+    });
+    // Campos inicio → inactivos
+    ['t-vr','t-vs','t-vt','t-pozo-ini','t-horm-prens-ini','t-horm-bomb-ini'].forEach(function(id){
+      var el=document.getElementById(id);if(el&&el.parentElement)el.parentElement.style.opacity='0.3';
+    });
+    // Flama: ocultar inicio, mostrar fin
+    hide('f-flama-ini'); show('f-flama-fin');
+    // Horas extra y doble turno → mostrar
+    show('card-hext'); show('card-dturno');
+
+    // Precargar datos del inicio si hay registro local
+    var sector = (document.getElementById('t-sector')||{}).value||'';
+    var hoy = new Date().toISOString().slice(0,10);
+    var regInicio = registrosTurno.find(function(r){
+      return r.modo==='inicio' && r.sector===sector && r.fecha===hoy;
+    });
+    if(regInicio){
+      showToast('✅ Datos de inicio precargados para ' + sector);
+    }
+  }
+}
+
+
+
+// ══ TOAST ══════════════════════════════════════════════════════
+function showToast(msg){
+  var t = document.createElement('div');
+  t.textContent = msg;
+  t.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);'
+    +'background:#0F172A;color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;'
+    +'font-weight:600;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.3);';
+  document.body.appendChild(t);
+  setTimeout(function(){t.remove();},3000);
+}
+
+// ══ RENDER REGISTROS TURNO ════════════════════════════════════
+function renderRegistrosTurno(){
+  var cont = document.getElementById('registros-turno');
+  if(!cont) return;
+  if(!registrosTurno.length){
+    cont.innerHTML='<div style="text-align:center;color:#94A3B8;padding:20px;font-size:13px">Sin registros aún</div>';
+    return;
+  }
+  cont.innerHTML = registrosTurno.map(function(r,i){
+    var isIni = r.modo==='inicio';
+    var isCompleto = r.termino;
+    var badgeCls = isCompleto?'completo':isIni?'inicio':'termino';
+    var badgeTxt = isCompleto?'✅ Completo':isIni?'🟢 Inicio':'🟡 Término';
+    return '<div class="reg-card">'
+      +'<div class="reg-card-hdr">'
+        +'<div class="reg-card-sec">⚙️ '+r.sector+'</div>'
+        +'<span class="reg-card-badge '+badgeCls+'">'+badgeTxt+'</span>'
+      +'</div>'
+      +'<div class="reg-card-body">'
+        +'<div class="reg-kpi"><div class="reg-kpi-l">👷 Operador</div><div class="reg-kpi-v">'+r.operador+'</div></div>'
+        +'<div class="reg-kpi"><div class="reg-kpi-l">🕐 Inicio</div><div class="reg-kpi-v">'+(r['hora-ini']||'—')+'</div></div>'
+        +'<div class="reg-kpi"><div class="reg-kpi-l">🕑 Término</div><div class="reg-kpi-v">'+(r['hora-fin']||'—')+'</div></div>'
+        +'<div class="reg-kpi"><div class="reg-kpi-l">⚡ V-F1</div><div class="reg-kpi-v">'+(r.vr||'—')+'V</div></div>'
+        +'<div class="reg-kpi"><div class="reg-kpi-l">💧 Pozo ini</div><div class="reg-kpi-v">'+(r['pozo-ini']||'—')+' cm</div></div>'
+        +'<div class="reg-kpi"><div class="reg-kpi-l">💧 Pozo fin</div><div class="reg-kpi-v">'+(r['pozo-fin']||'—')+' cm</div></div>'
+        +'<div class="reg-kpi"><div class="reg-kpi-l">🔧 Horm. P ini</div><div class="reg-kpi-v">'+(r['horm-prens-ini']||'—')+'h</div></div>'
+        +'<div class="reg-kpi"><div class="reg-kpi-l">🔧 Horm. P fin</div><div class="reg-kpi-v">'+(r['horm-prens-fin']||'—')+'h</div></div>'
+        +'<div class="reg-kpi"><div class="reg-kpi-l">🔧 Horm. B ini</div><div class="reg-kpi-v">'+(r['horm-bomb-ini']||'—')+'h</div></div>'
+      +'</div>'
+      +'<div class="reg-card-foot">'
+        +(isIni&&!isCompleto?'<button class="reg-edit-btn" onclick="editarTerminoTurno('+i+')">✏️ Completar término</button>':'')
+        +'<div class="reg-gps"><span class="gps-chip">📍 '+(r.lat&&r.lng?r.lat+', '+r.lng:'Sin GPS')+'</span></div>'
+      +'</div>'
+    +'</div>';
+  }).join('');
+}
+
+function editarTerminoTurno(i){
+  var r = registrosTurno[i];
+  editandoTurno = i;
+  setModoTurno('termino');
+  // Precargar datos del sector
+  var secEl = document.getElementById('t-sector');
+  if(secEl) secEl.value = r.sector;
+  var opEl = document.getElementById('t-operador');
+  if(opEl) opEl.value = r.operador;
+  showToast('Completa los datos de término para ' + r.sector);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ══ RENDER REGISTROS CAUDAL ═══════════════════════════════════
+
+
+
+
+// ══ INIT GPS AL CARGAR ════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', function(){
+  // Fecha automática en todas las hojas
+  ['t-fecha','f-fecha','c-fecha','h-fecha'].forEach(function(id){setFechaAuto(id);});
+  // Ocultar secciones de término por defecto
+  ['card-hext','card-dturno','f-flama-fin'].forEach(function(id){
+    var e=document.getElementById(id);if(e)e.style.display='none';
+  });
+  setModoTurno('inicio');
+  obtenerGPS('t-lat','t-lng','t-gps-status', GPS_TURNO);
+});
+
+// ── URLs Power Automate (completar con las URLs reales) ──────────
+var SHEETS_PRENSAS = {
+  'Turno_Termino':   'https://default1259e2e7e36c4aa59256ab0a2bd682.bc.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/5c38e81f48a94bb2964c6289bcdd6c6d/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=LHyh1pdwFXy9v6MOinAAC5dBAKkiLfS7dDUHg9FN_vI',
+  'Turno_Prensas':   'https://default1259e2e7e36c4aa59256ab0a2bd682.bc.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/1fc56a7188e34e06ae261d64fa171fd6/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=o5gAlbUFWesMYSgdUdJf8-lD-TYcDWU_byVlzv1k5X8',
+  'Fallas_Prensas':  'https://default1259e2e7e36c4aa59256ab0a2bd682.bc.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/65db051d438744be9bab9cec9a1bc3cb/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=XcOYKjPTBWLUicmtKlPI30wNTApgoX-g2X-JvfsjjfU',
+  'Caudal_Prensas':  'https://default1259e2e7e36c4aa59256ab0a2bd682.bc.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/af657af1b4614ce1800759ddecc56966/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=dMRUn2incjlel1Gos49-RkqpEW7QU6lZDQCsoAmnj7I',
+  'HExtra_Prensas':  'https://default1259e2e7e36c4aa59256ab0a2bd682.bc.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/ce973e207eda4c08a35e9ae54a90b8db/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Uks5_0fZ9CNQnC8m2WbXEDcyzkE9FLm8EJ9zoyWN8fY'
+};
+
+// ── Estado global ────────────────────────────────────────────────
+var togState = {};
+var fCat = '';
+
+// ── Fecha automática ─────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function(){
+  var hoy = new Date().toISOString().split('T')[0];
+  var hora = new Date().toTimeString().slice(0,5);
+  document.getElementById('hdr-fecha').innerHTML = '📅 <strong>' + new Date().toLocaleDateString('es-CL',{weekday:'short',day:'numeric',month:'short'}) + '</strong>';
+  ['t-fecha','f-fecha','c-fecha','h-fecha'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.value = hoy;
+  });
+});
+
+// ── Navegación tabs ──────────────────────────────────────────────
+function goTab(id, el){
+  document.querySelectorAll('.pg').forEach(function(p){p.className='pg';});
+  document.querySelectorAll('.tab').forEach(function(t){t.className='tab';});
+  document.getElementById('pg-'+id).className='pg on';
+  el.className='tab on';
+}
+
+// ── Toggles ──────────────────────────────────────────────────────
+function setTog(group, val){
+  togState[group] = val;
+  document.querySelectorAll('[id^="'+group+'-"]').forEach(function(btn){
+    btn.className='tog';
+  });
+  var active = document.getElementById(group+'-'+val);
+  if(active){
+    if(val==='si'||val==='ok'||val==='resuelto'||val==='operativa') active.className='tog si';
+    else if(val==='no'||val==='falla'||val==='pendiente') active.className='tog no';
+    else active.className='tog parcial';
+  }
+}
+
+// ── Tipo de evento falla ─────────────────────────────────────────
+function setFCat(cat){
+  fCat = cat;
+  document.getElementById('f-cat-falla').className = 'tog'+(cat==='falla'?' no':'');
+  document.getElementById('f-cat-noprens').className = 'tog'+(cat==='noprens'?' parcial':'');
+  document.getElementById('blk-falla-equipo').className = cat==='falla'?'':'hidden';
+  document.getElementById('blk-sin-prensado').className = cat==='noprens'?'':'hidden';
+}
+
+// ── Chips múltiples ──────────────────────────────────────────────
+function toggleChip(btn){
+  btn.classList.toggle('on');
+}
+function getChips(containerId){
+  var selected = [];
+  document.querySelectorAll('#'+containerId+' .chip.on').forEach(function(c){
+    selected.push(c.textContent.trim());
+  });
+  return selected.join(', ');
+}
+
+
+// ── Cálculo automático horas de prensado ─────────────────────
+function calcHorasPrens(){
+  var ini = parseFloat(document.getElementById('t-horm-prens-ini').value)||0;
+  var fin = parseFloat(document.getElementById('t-horm-prens-fin').value)||0;
+  var diff = fin > ini ? (fin - ini).toFixed(1) : 0;
+  document.getElementById('t-horas-prens').value = diff;
+}
+
+// ── Cálculo caudal automático ────────────────────────────────────
+function calcCaudal(){
+  var ini = parseFloat(document.getElementById('c-lect-ini').value)||0;
+  var fin = parseFloat(document.getElementById('c-lect-fin').value)||0;
+  var vol = fin > ini ? (fin - ini).toFixed(2) : 0;
+  document.getElementById('c-vol-proc').value = vol;
+}
+
+// ── Indicador de conexión ────────────────────────────────────────
+function setSyncUI(s){
+  var dot = document.getElementById('sdot');
+  var txt = document.getElementById('stxt');
+  if(s==='sync'){dot.className='dot sync';txt.textContent='Enviando...';}
+  else if(s==='ok'){dot.className='dot';txt.textContent='Enviado ✓';}
+  else if(s==='err'){dot.className='dot err';txt.textContent='Sin conexión';}
+  else{dot.className='dot';txt.textContent='En línea';}
+}
+
+// ── Toast ─────────────────────────────────────────────────────────
+function showToast(pg, msg, tipo){
+  var el = document.getElementById('t-'+pg);
+  if(!el) return;
+  el.textContent = msg;
+  el.className = 'toast '+(tipo==='ok'?'tok':'twarn');
+  el.style.display='block';
+  setTimeout(function(){ el.style.display='none'; }, 4000);
+}
+
+// ── Envío genérico ────────────────────────────────────────────────
+function now(){ return new Date().toLocaleString('es-CL'); }
+function enviar(hoja, fila, cb){
+  var url = SHEETS_PRENSAS[hoja];
+  if(!url){ cb(false); return; }
+  setSyncUI('sync');
+  fetch(url, {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({hoja:hoja, fila:fila})
+  }).then(function(r){
+    setSyncUI(r.ok?'ok':'err');
+    setTimeout(function(){setSyncUI('');}, 3000);
+    cb(r.ok);
+  }).catch(function(){
+    setSyncUI('err');
+    setTimeout(function(){setSyncUI('');}, 3000);
+    cb(false);
+  });
+}
+
+// ── Toggle horas extras / doble turno ───────────────────────────
+function toggleHExt(show){
+  document.getElementById('blk-hext').className = show ? '' : 'hidden';
+}
+function toggleDTurno(show){
+  document.getElementById('blk-dturno').className = show ? '' : 'hidden';
+}
+
+// ── GUARDAR TURNO ─────────────────────────────────────────────────
+function guardarTurno(){
+  var fecha = document.getElementById('t-fecha').value;
+  var sector = document.getElementById('t-sector').value;
+  var operador = document.getElementById('t-operador').value.trim();
+  // Generar ID único: fecha_sector_horaini
+  var horaIni = document.getElementById('t-hora-ini').value||'';
+  // ID usa solo fecha+sector para que coincida entre inicio y término
+  var idTurno = (fecha+'_'+sector).replace(/\s+/g,'').replace(/á/g,'a').replace(/é/g,'e').replace(/í/g,'i').replace(/ó/g,'o').replace(/ú/g,'u').replace(/ñ/g,'n');
+
+  var hBombIni  = parseFloat(document.getElementById('t-horm-bomb-ini').value)||0;
+  var hBombFin  = parseFloat(document.getElementById('t-horm-bomb-fin').value)||0;
+  var m3Bomba   = hBombFin > hBombIni ? Math.round((hBombFin-hBombIni)*100)/100 : 0;
+  var hFlamaIni = parseFloat((document.getElementById('t-flama-ini')||{}).value)||0;
+  var hFlamaFin = parseFloat((document.getElementById('t-flama-fin')||{}).value)||0;
+  var m3Flama   = hFlamaFin > hFlamaIni ? Math.round((hFlamaFin-hFlamaIni)*100)/100 : 0;
+  var flamaAplStr = flamaAplica ? 'Aplica' : 'No aplica';
+
+  var fila = [
+    idTurno,                                                            // [0]  ID_Turno
+    fecha,                                                              // [1]  Fecha
+    document.getElementById('t-hora-ini').value,                       // [2]  Hora_Inicio
+    document.getElementById('t-hora-fin').value,                       // [3]  Hora-Término
+    sector,                                                             // [4]  Sector
+    operador,                                                           // [5]  Operador
+    togState['t-op']||'',                                              // [6]  Estado_Operacional
+    parseFloat(document.getElementById('t-horas-prens').value)||0,     // [7]  Horas_Efectivas
+    parseFloat(document.getElementById('t-vr').value)||0,              // [8]  Voltaje-Fase1
+    parseFloat(document.getElementById('t-vs').value)||0,              // [9]  Voltaje-Fase2
+    parseFloat(document.getElementById('t-vt').value)||0,              // [10] Voltaje-Fase3
+    parseFloat(document.getElementById('t-pozo-ini').value)||0,        // [11] Pozo-Inicio_cm
+    parseFloat(document.getElementById('t-pozo-fin').value)||0,        // [12] Pozo_Termino_cm
+    parseFloat(document.getElementById('t-horm-prens-ini').value)||0,  // [13] Horometro_Prensa_Ini
+    parseFloat(document.getElementById('t-horm-prens-fin').value)||0,  // [14] Horometro_Prensa_Fin
+    hBombIni,                                                           // [15] Horometro_Bomba_Ini
+    hBombFin,                                                           // [16] Horometro_Bomba_Fin
+    document.getElementById('t-obs').value.trim(),                     // [17] Observaciones
+    m3Bomba,                                                            // [18] M3_Bomba
+    hFlamaIni,                                                          // [19] Horometro_Flama_Ini
+    hFlamaFin,                                                          // [20] Horometro_Flama_Fin
+    m3Flama,                                                            // [21] M3_Flama
+    flamaAplStr,                                                        // [22] Flama_Aplica
+    document.getElementById('t-lat').value||'',                        // [23] Latitud
+    document.getElementById('t-lng').value||'',                        // [24] Longitud
+    togState['t-hext']||'No',
+    togState['t-hext']==='si' ? (parseFloat(document.getElementById('t-hext-cant').value)||0) : 0,
+    togState['t-hext']==='si' ? getChips('chips-hext') : '',
+    togState['t-hext']==='si' ? document.getElementById('t-hext-detalle').value.trim() : '',
+    togState['t-dturno']||'No',
+    togState['t-dturno']==='si' ? document.getElementById('t-dturno-op').value.trim() : '',
+    togState['t-dturno']==='si' ? getChips('chips-dturno') : '',
+    togState['t-dturno']==='si' ? document.getElementById('t-dturno-detalle').value.trim() : ''
+  ];
+
+  // Guardar registro local para mostrar abajo
+  var reg = {
+    idTurno: idTurno,
+    modo: modoTurno,
+    sector: sector,
+    operador: operador,
+    fecha: fecha,
+    lat: (document.getElementById('t-lat')||{}).value||'',
+    lng: (document.getElementById('t-lng')||{}).value||'',
+    termino: modoTurno==='termino',
+    'hora-ini': document.getElementById('t-hora-ini').value,
+    'hora-fin': document.getElementById('t-hora-fin').value,
+    vr: document.getElementById('t-vr').value,
+    vs: document.getElementById('t-vs').value,
+    vt: document.getElementById('t-vt').value,
+    'pozo-ini': document.getElementById('t-pozo-ini').value,
+    'pozo-fin': document.getElementById('t-pozo-fin').value,
+    'horm-prens-ini': document.getElementById('t-horm-prens-ini').value,
+    'horm-prens-fin': document.getElementById('t-horm-prens-fin').value,
+    'horm-bomb-ini':  document.getElementById('t-horm-bomb-ini').value,
+    'horm-bomb-fin':  document.getElementById('t-horm-bomb-fin').value,
+    estado: togState['t-op']||'',
+  };
+  if(editandoTurno>=0){
+    Object.assign(registrosTurno[editandoTurno], reg);
+    registrosTurno[editandoTurno].termino=true;
+    editandoTurno=-1;
+  } else {
+    registrosTurno.push(reg);
+  }
+  renderRegistrosTurno();
+
+  // Usar URL de inicio o término según modo
+  var hojaTurno = modoTurno === 'termino' ? 'Turno_Termino' : 'Turno_Prensas';
+
+  // Para término enviar como JSON con campos nominales en lugar de array
+  if(modoTurno === 'termino'){
+    // Usar el ID guardado del inicio
+    var hidId = document.getElementById('t-id-turno');
+    var idReg = hidId ? hidId.value : '';
+    if(!idReg && editandoTurno >= 0 && registrosTurno[editandoTurno]){
+      idReg = registrosTurno[editandoTurno].idTurno || '';
+    }
+    if(!idReg){
+      alert('No se encontró el ID del turno de inicio. Asegúrate de enviar el inicio primero.');
+      return;
+    }
+    var bodyT = {
+      ID_Turno:             idReg,
+      Hora_Termino:         document.getElementById('t-hora-fin').value,
+      Pozo_Termino_cm:      parseFloat(document.getElementById('t-pozo-fin').value)||0,
+      Horometro_Prensa_Fin: parseFloat(document.getElementById('t-horm-prens-fin').value)||0,
+      Horometro_Bomba_Fin:  parseFloat(document.getElementById('t-horm-bomb-fin').value)||0,
+      M3_Bomba:             m3Bomba,
+      Horometro_Flama_Fin:  hFlamaFin,
+      M3_Flama:             m3Flama,
+      Horas_Efectivas:      parseFloat(document.getElementById('t-horas-prens').value)||0,
+    };
+    setSyncUI('sync');
+    fetch(SHEETS_PRENSAS['Turno_Termino'], {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(bodyT)
+    }).then(function(r){
+      setSyncUI(r.ok?'ok':'err');
+      setTimeout(function(){setSyncUI('');},3000);
+      showToast(r.ok?'✅ Término guardado correctamente':'⚠️ Sin conexión — datos no enviados');
+      if(r.ok) limpiarTurno();
+    }).catch(function(){
+      setSyncUI('err');
+      setTimeout(function(){setSyncUI('');},3000);
+      showToast('⚠️ Sin conexión — datos no enviados');
+    });
+    return;
+  }
+
+  // Inicio → flujo agregar fila / Término → flujo actualizar fila
+  if(modoTurno === 'termino'){
+    // Usar el ID guardado del inicio
+    var hidId = document.getElementById('t-id-turno');
+    var idReg = hidId ? hidId.value : '';
+    if(!idReg && editandoTurno >= 0 && registrosTurno[editandoTurno]){
+      idReg = registrosTurno[editandoTurno].idTurno || '';
+    }
+    if(!idReg){
+      alert('No se encontró el ID del turno de inicio. Asegúrate de enviar el inicio primero.');
+      return;
+    }
+    var bodyTermino = {
+      ID_Turno:             idReg,
+      Hora_Termino:         document.getElementById('t-hora-fin').value,
+      Pozo_Termino_cm:      parseFloat(document.getElementById('t-pozo-fin').value)||0,
+      Horometro_Prensa_Fin: parseFloat(document.getElementById('t-horm-prens-fin').value)||0,
+      Horometro_Bomba_Fin:  parseFloat(document.getElementById('t-horm-bomb-fin').value)||0,
+      M3_Bomba:             m3Bomba,
+      Horometro_Flama_Fin:  hFlamaFin,
+      M3_Flama:             m3Flama,
+      Horas_Efectivas:      parseFloat(document.getElementById('t-horas-prens').value)||0,
+    };
+    setSyncUI('sync');
+    fetch(SHEETS_PRENSAS['Turno_Termino'],{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(bodyTermino)
+    }).then(function(r){
+      setSyncUI(r.ok?'ok':'err');
+      setTimeout(function(){setSyncUI('');},3000);
+      showToast(r.ok?'✅ Término guardado correctamente':'⚠️ Sin conexión — datos no enviados');
+      if(r.ok) limpiarTurno();
+    }).catch(function(){
+      setSyncUI('err');
+      setTimeout(function(){setSyncUI('');},3000);
+      showToast('⚠️ Sin conexión — datos no enviados');
+    });
+  } else {
+    // Guardar ID en campo oculto para usarlo en término
+    var hidId = document.getElementById('t-id-turno');
+    if(hidId) hidId.value = idTurno;
+    enviar('Turno_Prensas', fila, function(ok){
+      showToast(ok?'✅ Turno guardado correctamente':'⚠️ Sin conexión — datos no enviados');
+      if(ok) limpiarTurno();
+    });
+  }
+}
+
+function limpiarTurno(){
+  ['t-hora-ini','t-hora-fin','t-operador','t-horas-prens','t-vr','t-vs','t-vt',
+   't-pozo-ini','t-pozo-fin','t-horm-prens-ini','t-horm-prens-fin',
+   't-horm-bomb-ini','t-horm-bomb-fin','t-obs'].forEach(function(id){
+    var el=document.getElementById(id); if(el)el.value='';
+  });
+  document.getElementById('t-sector').value='';
+  delete togState['t-op'];
+  document.querySelectorAll('[id^="t-op-"]').forEach(function(b){b.className='tog';});
+  ['t-hext-cant','t-hext-detalle','t-dturno-op','t-dturno-detalle'].forEach(function(id){
+    var el=document.getElementById(id); if(el)el.value='';
+  });
+  ['blk-hext','blk-dturno'].forEach(function(id){
+    document.getElementById(id).className='hidden';
+  });
+  document.querySelectorAll('#chips-hext .chip.on, #chips-dturno .chip.on').forEach(function(c){c.className='chip';});
+  ['t-hext','t-dturno'].forEach(function(g){ delete togState[g]; });
+  document.querySelectorAll('[id^="t-hext-s"],[id^="t-hext-n"],[id^="t-dturno-s"],[id^="t-dturno-n"]').forEach(function(b){b.className='tog';});
+  var hoy = new Date().toISOString().split('T')[0];
+  document.getElementById('t-fecha').value = hoy;
+}
+
+// ── GUARDAR FALLA ─────────────────────────────────────────────────
+function guardarFalla(){
+  var fecha = document.getElementById('f-fecha').value;
+  var sector = document.getElementById('f-sector').value;
+  var operador = document.getElementById('f-operador').value.trim();
+  if(!fecha){ alert('Ingresa la fecha.'); return; }
+  if(!sector){ alert('Selecciona el sector.'); return; }
+  if(!operador){ alert('Ingresa el nombre del operador.'); return; }
+  if(!fCat){ alert('Selecciona el tipo de evento.'); return; }
+
+  var equipos = fCat==='falla' ? getChips('chips-equipos') : '';
+  var motivos = fCat==='noprens' ? getChips('chips-motivos') : '';
+
+  var fila = [
+    now(),
+    fecha,
+    document.getElementById('f-hora').value,
+    sector,
+    operador,
+    fCat,
+    equipos,
+    document.getElementById('f-desc-falla').value.trim(),
+    togState['f-det']||'',
+    parseFloat(document.getElementById('f-duracion').value)||0,
+    togState['f-res']||'',
+    motivos,
+    parseFloat(document.getElementById('f-horas-sin').value)||0,
+    document.getElementById('f-acciones').value.trim(),
+    togState['f-notif']||''
+  ];
+
+  enviar('Fallas_Prensas', fila, function(ok){
+    showToast('falla', ok?'✅ Falla registrada correctamente':'⚠️ Sin conexión — no se envió', ok?'ok':'warn');
+    if(ok) limpiarFalla();
+  });
+}
+
+function limpiarFalla(){
+  ['f-hora','f-operador','f-desc-falla','f-duracion','f-horas-sin','f-acciones'].forEach(function(id){
+    var el=document.getElementById(id); if(el)el.value='';
+  });
+  document.getElementById('f-sector').value='';
+  fCat='';
+  ['f-cat-falla','f-cat-noprens'].forEach(function(id){
+    var el=document.getElementById(id); if(el)el.className='tog';
+  });
+  ['blk-falla-equipo','blk-sin-prensado'].forEach(function(id){
+    document.getElementById(id).className='hidden';
+  });
+  document.querySelectorAll('.chip.on').forEach(function(c){c.className='chip';});
+  ['f-det','f-res','f-notif'].forEach(function(g){ delete togState[g]; });
+  document.querySelectorAll('[id^="f-det-"],[id^="f-res-"],[id^="f-notif-"]').forEach(function(b){b.className='tog';});
+  var hoy = new Date().toISOString().split('T')[0];
+  document.getElementById('f-fecha').value = hoy;
+}
+
+// ── GUARDAR CAUDAL ────────────────────────────────────────────────
+function guardarCaudal(){
+  var fecha = document.getElementById('c-fecha').value;
+  var sector = document.getElementById('c-sector').value;
+  var operador = document.getElementById('c-operador').value.trim();
+  if(!fecha){ alert('Ingresa la fecha.'); return; }
+  if(!sector){ alert('Selecciona el sector.'); return; }
+  if(!operador){ alert('Ingresa el nombre del operador.'); return; }
+
+  var fila = [
+    now(),
+    fecha,
+    document.getElementById('c-hora-ini').value,
+    document.getElementById('c-hora-fin').value,
+    sector,
+    operador,
+    parseFloat(document.getElementById('c-lect-ini').value)||0,
+    parseFloat(document.getElementById('c-lect-fin').value)||0,
+    parseFloat(document.getElementById('c-vol-proc').value)||0,
+    togState['c-est']||'',
+    document.getElementById('c-obs').value.trim()
+  ];
+
+  enviar('Caudal_Prensas', fila, function(ok){
+    showToast('caudal', ok?'✅ Caudal registrado correctamente':'⚠️ Sin conexión — no se envió', ok?'ok':'warn');
+    if(ok) limpiarCaudal();
+  });
+}
+
+function limpiarCaudal(){
+  ['c-hora-ini','c-hora-fin','c-operador','c-lect-ini','c-lect-fin','c-vol-proc','c-obs'].forEach(function(id){
+    var el=document.getElementById(id); if(el)el.value='';
+  });
+  document.getElementById('c-sector').value='';
+  delete togState['c-est'];
+  document.querySelectorAll('[id^="c-est-"]').forEach(function(b){b.className='tog';});
+  var hoy = new Date().toISOString().split('T')[0];
+  document.getElementById('c-fecha').value = hoy;
+}
+
+// ── TIPO DE JORNADA ───────────────────────────────────────────
+var hTipo = '';
+function setHTipo(tipo){
+  hTipo = tipo;
+  document.getElementById('h-tipo-extra').className = 'tog'+(tipo==='extra'?' si':'');
+  document.getElementById('h-tipo-doble').className = 'tog'+(tipo==='doble'?' si':'');
+  document.getElementById('blk-hora-extra').className = tipo==='extra'?'':'hidden';
+  document.getElementById('blk-doble-turno').className = tipo==='doble'?'':'hidden';
+}
+
+// ── GUARDAR HORAS EXTRAS ──────────────────────────────────────
+function guardarHExtra(){
+  var fecha = document.getElementById('h-fecha').value;
+  var sector = document.getElementById('h-sector').value;
+  var operador = document.getElementById('h-operador').value.trim();
+  if(!fecha){ alert('Ingresa la fecha.'); return; }
+  if(!sector){ alert('Selecciona el sector.'); return; }
+  if(!operador){ alert('Ingresa el nombre del operador.'); return; }
+  if(!hTipo){ alert('Selecciona el tipo de jornada.'); return; }
+
+  var fila = [
+    now(),
+    fecha,
+    sector,
+    operador,
+    hTipo,
+    hTipo==='extra' ? (document.getElementById('h-extra-ini').value||'') : (document.getElementById('h-doble-ini').value||''),
+    hTipo==='extra' ? (document.getElementById('h-extra-fin').value||'') : (document.getElementById('h-doble-fin').value||''),
+    hTipo==='extra' ? (parseFloat(document.getElementById('h-extra-total').value)||0) : '',
+    hTipo==='doble' ? (document.getElementById('h-doble-op2').value.trim()) : '',
+    getChips('chips-motivo-hextra'),
+    document.getElementById('h-motivo-detalle').value.trim(),
+    togState['h-aut']||'',
+    document.getElementById('h-supervisor').value.trim(),
+    document.getElementById('h-obs').value.trim()
+  ];
+
+  enviar('HExtra_Prensas', fila, function(ok){
+    showToast('hextra', ok?'✅ Jornada registrada correctamente':'⚠️ Sin conexión — no se envió', ok?'ok':'warn');
+    if(ok) limpiarHExtra();
+  });
+}
+
+function limpiarHExtra(){
+  ['h-extra-ini','h-extra-fin','h-extra-total','h-doble-ini','h-doble-fin',
+   'h-doble-op2','h-motivo-detalle','h-supervisor','h-obs','h-operador'].forEach(function(id){
+    var el=document.getElementById(id); if(el)el.value='';
+  });
+  document.getElementById('h-sector').value='';
+  hTipo='';
+  ['h-tipo-extra','h-tipo-doble'].forEach(function(id){document.getElementById(id).className='tog';});
+  ['blk-hora-extra','blk-doble-turno'].forEach(function(id){document.getElementById(id).className='hidden';});
+  document.querySelectorAll('#chips-motivo-hextra .chip.on').forEach(function(c){c.className='chip';});
+  delete togState['h-aut'];
+  document.querySelectorAll('[id^="h-aut-"]').forEach(function(b){b.className='tog';});
+  var hoy = new Date().toISOString().split('T')[0];
+  document.getElementById('h-fecha').value = hoy;
+}
+
+</script>
+</body>
+</html>
